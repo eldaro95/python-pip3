@@ -1,19 +1,26 @@
-def get_population(mob_days):
-  population_dict = {
-    '2022': int(mob_days['2022 Population']),
-    '2020': int(mob_days['2020 Population']),
-    '2015': int(mob_days['2015 Population']),
-    '2010': int(mob_days['2010 Population']),
-    '2000': int(mob_days['2000 Population']),
-    '1990': int(mob_days['1990 Population']),
-    '1980': int(mob_days['1980 Population']),
-    '1970': int(mob_days['1970 Population'])
-  }
-  labels = population_dict.keys()
-  values = population_dict.values()
-  return labels, values
+import read_csv as rc
+from collections import Counter
 
-
-def population_by_country(data, country):
-  result = list(filter(lambda item: item['Country'] == country, data))
+def fmin(campo,num,data):
+  result= list(filter(lambda item: float(item[campo])>=num, data))
   return result
+
+def feq(campo,num,data):
+  result= list(filter(lambda item: float(item[campo])==num, data))
+  return result
+
+def count(campo,data):
+    base=list(map(lambda x:x[campo], data))
+    fields = Counter(list(base))
+    labels=sorted(fields.keys())
+    values=fields.values()
+    return labels, values
+    
+
+if __name__ == '__main__':
+  a = fmin(12,rc.read_csv('sample.csv'))
+  f= 'Participant Age'
+  l1,l2=count(f,a)
+  print (l1,l2)
+  
+  
