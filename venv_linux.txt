@@ -1,0 +1,20 @@
+Instalar:
+sudo apt install -y python3-venv
+Crear:
+python3 -m venv env
+Activar:
+source env/bin/activate
+Desactivar:
+deactivate
+
+which python3 = ver donde esta python3
+which pip3 = ver donde esta pip3
+
+pip3 freeze = ver paquetes instalados (vacio en env nuevo)
+
+pip3 isntall matplotlib pandas numpy
+
+requierements.txt
+    Guardar = pip3 freeze > requierements.txt
+    Instalar = pip3 install -r requierements.txt
+
