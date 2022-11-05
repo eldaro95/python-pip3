@@ -1,31 +1,29 @@
 import utils
 import read_csv as rc
 import charts
+import pandas as pd
 from collections import Counter
 
 def run():
-    data =rc.read_csv('sample.csv')
-    #Filtrar datos por tiempo de mobilidad minima
-    tmin=int(input('Ingrese la edad minima: '))
-    result=utils.fmin('Participant Age',tmin,data)
-    #Obtenemos datos de pais y contamos
-    field1='Sending Country Code'
-    l_pais , v_pais = utils.count(field1,result)
-    charts.pie_chart(field1,l_pais,v_pais)
     
-    #Obtenemos datos de edad y contamos
-    field2='Participant Age'
-    l_p , v_p = utils.count(field2,result)
-    charts.bar_chart(field2,l_p,v_p) 
-    #charts.pie_chart(pais,edad)
+    f1='Sending Country Code'
+    f2='Participant Age'
     
-''' Para realizar graficos de una fila con datos en varias columnas
-    if result>0:
-        p_result=result[0]
-        name=p_result['Project Reference']
-        labels, values=utils.get_age(p_result) 
-        charts.pie_chart(name,labels,values) 
-'''
+    df=pd.read_csv('sample.csv')
+    
+    df=df[df[f2]>=27] #filtrar solo los que cumplan
+    
+    #Graficar con pandas incluido conteo de f1
+    s10=list(dict(df[f1].value_counts()).keys())
+    s11=list(dict(df[f1].value_counts()).values())
+    charts.pie_chart('Pandas de '+f1,s10,s11)
+ 
+    #Graficar con pandas incluido conteo de f2
+    p10=list(dict(df[f2].value_counts()).keys())
+    p11=list(dict(df[f2].value_counts()).values())
+    charts.bar_chart('Pandas de '+f2,p10,p11)
+    
+    #Sale diferente que el otro metodo (verificar)
 
 if __name__ == '__main__':
     run()
